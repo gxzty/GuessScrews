@@ -1,7 +1,10 @@
-# GuessScrews
+# GuessScrews 
 This is a game.
+
 Guess Screws with computer
+
 规则如下：
+
     1.游戏开始时，双方各分配20个螺丝作为初始条件。
     2.每回合双方各放置1-5个螺丝（只有三次放置1个的机会），然后比较双方放置螺丝的数目。
     3.双方将所有螺丝弃置，但是该回合放置数目多的一方可以拿回2颗螺丝。
