@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <gtk/gtk.h>
+#include "GuessScrews_v0.4.c"
 
 int main(int argc, char *argv[])
 {
@@ -18,7 +19,8 @@ int main(int argc, char *argv[])
 	GtkEntry *entry1 = gtk_entry_new();
 
 	//need one labels for display status
-	GtkLabel *label1 = gtk_label_new("1");
+	char rule = rule();
+	GtkLabel *label1 = gtk_label_new(&rule);
 
 	//position
     gtk_grid_attach(grid1,entry1,0,1,1,1);
