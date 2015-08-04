@@ -19,8 +19,8 @@ int main(int argc, char *argv[])
 	GtkEntry *entry1 = gtk_entry_new();
 
 	//need one labels for display status
-	char rule = rule();
-	GtkLabel *label1 = gtk_label_new(&rule);
+	rule();
+	GtkLabel *label1 = gtk_label_new("1");
 
 	//position
     gtk_grid_attach(grid1,entry1,0,1,1,1);
