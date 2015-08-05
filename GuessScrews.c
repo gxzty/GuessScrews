@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-char rule();//规则函数
+void rule();//规则函数
 void Wal(int win,int lose);//胜率统计，数据存放在win.dat中
 void surenumber(int i);//判断玩家输入是否为数字，若不为数字则提示输入错误，要求重新输入
 
@@ -16,12 +16,12 @@ int main(int argc, char *argv[])
 		surenumber(scanf("%d",&put1));
 		while (put1 < 1 ||  5 < put1){
 		    puts("放置错误，只能放置1-5个螺丝，请重新输入：\n");
-	        scanf("%d",&put1);
+	        surenumber(scanf("%d",&put1));
 		}
 		if (put1 == 1) boom1++;
 		while (boom1 > 3){
 		    puts("你已经没有放置一个的机会，请选择放置2-5个：\n");
-	        scanf("%d",&put1);
+	        surenumber(scanf("%d",&put1));
 			if(put1 != 1) boom1--;
 		}
 
@@ -60,8 +60,7 @@ int main(int argc, char *argv[])
 	return 0;
 }
 
-char rule(){
-    return
+void rule(){
 		puts("规则如下： \n");
 		puts("    1.游戏开始时，双方各分配20个螺丝作为初始条件。\n");
 		puts("    2.每回合双方各放置1-5个螺丝（只有三次放置1个的机会），然后比较双方放置螺丝的数目。\n");
