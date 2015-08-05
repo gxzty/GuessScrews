@@ -1,15 +1,19 @@
+#include <stdio.h>
+
+char rule();//规则函数
+void Wal(int win,int lose);//胜率统计，数据存放在win.dat中
+void surenumber(int i);//判断玩家输入是否为数字，若不为数字则提示输入错误，要求重新输入
 
 
-char rule();
-void Wal(int win,int lose);
-/*
+int put1;//将put1声明为全局变量，使得surenumber函数可以使用并传递put1
+
 int main(int argc, char *argv[])
 {
     rule();
-	int screw1 = 20,screw2 = 20,put1 = 1,put2 = 1,boom1 = 0,boom2 = 0;
+	int screw1 = 20,screw2 = 20,put2,boom1 = 0,boom2 = 0;
 	while ( (5 < screw1 && 5 < screw2 ) || (screw1 <= 5 && screw2 <= 5 && screw1 == screw2)){
 		puts("请输入你要放置的螺丝数：\n");
-	    scanf("%d",&put1);
+		surenumber(scanf("%d",&put1));
 		while (put1 < 1 ||  5 < put1){
 		    puts("放置错误，只能放置1-5个螺丝，请重新输入：\n");
 	        scanf("%d",&put1);
@@ -55,7 +59,6 @@ int main(int argc, char *argv[])
     Wal(win,lose);
 	return 0;
 }
-*/
 
 char rule(){
     return
@@ -66,6 +69,15 @@ char rule(){
 		puts("    4.回合结束。\n");
 		puts("    5.重复步骤2-4。\n");
 		puts("    6.若只有一方剩余螺丝不大于5，则另一方获胜；若双方螺丝同时不大于5，则剩余螺丝较多的一方获胜；若双方螺丝同时到0，则平局\n");
+}
+
+void surenumber(int i ){
+	while (!i){
+		//如果输入不是数字，则scanf返回值为0，!i = 1，进入while循环
+		puts("放置错误，只能放置1-5个螺丝，请重新输入：\n");
+		fflush(stdin);
+		i = scanf("%d",&put1);
+	}
 }
 
 void Wal(int win,int lose){
