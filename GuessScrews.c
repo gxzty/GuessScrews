@@ -5,7 +5,7 @@ void Wal(int win,int lose);//胜率统计，数据存放在win.dat中
 void surenumber(int i);//判断玩家输入是否为数字，若不为数字则提示输入错误，要求重新输入
 
 
-int put1;//将put1声明为全局变量，使得surenumber函数可以使用并传递put1
+int put1;//将put1声明为全局变量，使得surenumber()可以使用并传递put1
 
 int main(int argc, char *argv[])
 {
