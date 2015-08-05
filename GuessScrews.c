@@ -72,7 +72,7 @@ void rule(){
 
 void surenumber(int i ){
 	while (!i){
-		//如果输入不是数字，则scanf返回值为0，!i = 1，进入while循环
+		//如果输入不是数字，则scanf()返回值为0，!i = 1，进入while循环
 		puts("放置错误，只能放置1-5个螺丝，请重新输入：\n");
 		fflush(stdin);
 		i = scanf("%d",&put1);
