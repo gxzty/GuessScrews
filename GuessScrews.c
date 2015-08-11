@@ -3,27 +3,20 @@
 void rule();//规则函数
 void Wal(int win,int lose);//胜率统计，数据存放在win.dat中
 void surenumber(int i);//判断玩家输入是否为数字，若不为数字则提示输入错误，要求重新输入
+void efnumber();//确认输入数字有效（是数字，不大于剩余数量，在1-5内，是否能输入1）
 
-
-int put1;//将put1声明为全局变量，使得surenumber()可以使用并传递put1
+int put1 = 0;
+int boom1 = 0;
+int screw1 = 20;
 
 int main(int argc, char *argv[])
 {
     rule();
-	int screw1 = 20,screw2 = 20,put2,boom1 = 0,boom2 = 0;
-	while ( (5 < screw1 && 5 < screw2 ) || (screw1 <= 5 && screw2 <= 5 && screw1 == screw2)){
+	int screw2 = 20,put2,boom2 = 0;
+	while ( ((5 < screw1 && 5 < screw2 ) || (screw1 <= 5 && screw2 <= 5 && screw1 == screw2)) && 0 < screw1 && 0 < screw2){
 		puts("请输入你要放置的螺丝数：\n");
-		surenumber(scanf("%d",&put1));
-		while (put1 < 1 ||  5 < put1){
-		    puts("放置错误，只能放置1-5个螺丝，请重新输入：\n");
-	        surenumber(scanf("%d",&put1));
-		}
-		if (put1 == 1) boom1++;
-		while (boom1 > 3){
-		    puts("你已经没有放置一个的机会，请选择放置2-5个：\n");
-	        surenumber(scanf("%d",&put1));
-			if(put1 != 1) boom1--;
-		}
+        efnumber();
+
 
     	srand((unsigned)time(NULL));
 	    put2 = rand()%(5-1+1)+1;
@@ -34,17 +27,17 @@ int main(int argc, char *argv[])
 			boom2--;
 		}
 		printf("你放置了%d个，你对手放置了%d个\n\n",put1,put2);
+		screw1 -= put1;
+		screw2 -= put2;
 		if (put1 < put2){
-			screw1 -= put1;
-			screw2 = screw2 - put2 + 2;
+			screw2 += 2;
 			puts("该回合你对手赢了！\n\n");
 		}
 		else if (put2 < put1){
-			screw2 -= put2;
-			screw1 = screw1 - put1 + 2;
+			screw1 += 2;
             puts("该回合你赢了！\n\n");
 		}
-		else {screw1 -= put1; screw2 -= put2;}
+		else {puts("该回合平局。\n\n");}
 		printf("你还剩余%d个螺丝，对手还剩余%d个螺丝\n\n",screw1,screw2);
 	}
 	int lose = 0, win = 0;
@@ -73,11 +66,29 @@ void rule(){
 void surenumber(int i ){
 	while (!i){
 		//如果输入不是数字，则scanf()返回值为0，!i = 1，进入while循环
-		puts("放置错误，只能放置1-5个螺丝，请重新输入：\n");
+		puts("放置错误，请输入1-5之间的数字：\n");
 		fflush(stdin);
 		i = scanf("%d",&put1);
 	}
 }
+
+void efnumber(){
+	fflush(stdin);
+	scanf("%d",&put1);
+    surenumber(put1);
+    if (put1 < 1 || put1 > 5) {puts("输入错误，请重新输入：\n"); efnumber();}
+    else if (screw1 < put1) {puts("输入错误，请重新输入：\n"); efnumber();}
+	else if (put1 == 1){
+		boom1++;
+		while (boom1 > 3){
+			boom1 = 3;
+		    puts("你已经没有放置一个的机会，请选择放置2-5个：\n");
+	        efnumber();
+			if(put1 != 1) boom1--;
+		}
+	}
+}
+
 
 void Wal(int win,int lose){
 	FILE *fr,*fw;
