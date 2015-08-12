@@ -4,34 +4,24 @@ void rule();//规则函数
 void Wal(int win,int lose);//胜率统计，数据存放在win.dat中
 void surenumber(int i);//判断玩家输入是否为数字，若不为数字则提示输入错误，要求重新输入
 void efnumber();//确认输入数字有效（是数字，不大于剩余数量，在1-5内，是否能输入1）
+void comber();//确认电脑生成的随机数无误
 
-int put1 = 0;
-int boom1 = 0;
-int screw1 = 20;
+int put1 = 0,put2 = 0, boom1 = 0, boom2 = 0, screw1 = 20, screw2 = 20;
 
 int main(int argc, char *argv[])
 {
     rule();
-	int screw2 = 20,put2,boom2 = 0;
+
 	while ( ((5 < screw1 && 5 < screw2 ) || (screw1 <= 5 && screw2 <= 5 && screw1 == screw2)) && 0 < screw1 && 0 < screw2){
 		puts("请输入你要放置的螺丝数：\n");
         efnumber();
-
-
-    	srand((unsigned)time(NULL));
-	    put2 = rand()%(5-1+1)+1;
-		if (put2 == 1) boom2++;
-		while (boom2 > 3){
-			srand((unsigned)time(NULL));
-		    put2 = rand()%(5-2+2)+2;
-			boom2--;
-		}
+		comber();
 		printf("你放置了%d个，你对手放置了%d个\n\n",put1,put2);
 		screw1 -= put1;
 		screw2 -= put2;
 		if (put1 < put2){
 			screw2 += 2;
-			puts("该回合你对手赢了！\n\n");
+			puts("该回合你输了！\n\n");
 		}
 		else if (put2 < put1){
 			screw1 += 2;
@@ -40,15 +30,19 @@ int main(int argc, char *argv[])
 		else {puts("该回合平局。\n\n");}
 		printf("你还剩余%d个螺丝，对手还剩余%d个螺丝\n\n",screw1,screw2);
 	}
-	int lose = 0, win = 0;
+    
+
+	int lose = 0, win = 0;	
+
 	if (screw1 < screw2){
 		puts("你输了！");
 		lose = 1;
 	}
-	else {
+	else if (screw2 < screw1){
 		puts("你赢了！");
 	    win = 1;
 	}
+	else puts("平局！");
     Wal(win,lose);
 	return 0;
 }
@@ -86,6 +80,19 @@ void efnumber(){
 	        efnumber();
 			if(put1 != 1) boom1--;
 		}
+	}
+}
+
+void comber(){
+	srand((unsigned)time(NULL));
+	put2 = rand()%(5-1+1)+1;
+	if (put2 == 1) boom2++;
+	while (boom2 > 3){
+		boom2--;
+		comber();
+	}
+	while (screw2 < put2){
+		comber();
 	}
 }
 
